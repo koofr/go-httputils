@@ -1,5 +1,5 @@
 go-httputils
-=============
+============
 
 Go HTTP utils.
 
