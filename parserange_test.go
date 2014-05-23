@@ -1,8 +1,8 @@
 package httputils_test
 
 import (
-	. "git.koofr.lan/go-httputils.git"
-	"git.koofr.lan/go-ioutils.git"
+	. "github.com/koofr/go-httputils"
+	"github.com/koofr/go-ioutils"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

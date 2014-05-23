@@ -2,7 +2,7 @@ package httputils
 
 import (
 	"errors"
-	"git.koofr.lan/go-ioutils.git"
+	"github.com/koofr/go-ioutils"
 	"strconv"
 	"strings"
 )

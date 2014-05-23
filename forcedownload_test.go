@@ -1,7 +1,7 @@
 package httputils_test
 
 import (
-	. "git.koofr.lan/go-httputils.git"
+	. "github.com/koofr/go-httputils"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"net/http"
