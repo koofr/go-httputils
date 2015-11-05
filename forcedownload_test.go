@@ -22,11 +22,11 @@ var _ = Describe("Forcedownload", func() {
 	It("should escape unicode characters", func() {
 		h := make(http.Header)
 
-		ForceDownload("čšžČŠŽ.txt", h)
+		ForceDownload("čšž,ČŠŽ.txt", h)
 
 		Expect(h).To(Equal(http.Header{
 			"Content-Type":        {"application/force-download"},
-			"Content-Disposition": {`attachment; filename="??????.txt"; filename*=UTF-8''%C4%8D%C5%A1%C5%BE%C4%8C%C5%A0%C5%BD.txt`},
+			"Content-Disposition": {`attachment; filename="???,???.txt"; filename*=UTF-8''%C4%8D%C5%A1%C5%BE%2C%C4%8C%C5%A0%C5%BD.txt`},
 		}))
 	})
 })

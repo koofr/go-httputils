@@ -15,7 +15,7 @@ func ForceDownload(filename string, h http.Header) {
 		Path: filename,
 	}
 
-	encodedName := u.String()
+	encodedName := strings.Replace(u.String(), ",", "%2C", -1)
 
 	d := fmt.Sprintf(`attachment; filename="%s"; filename*=UTF-8''%s`, asciiName, encodedName)
 
