@@ -3,13 +3,14 @@ package httputils_test
 import (
 	"bytes"
 	"fmt"
+	"io"
+	"io/ioutil"
+	"net/http"
+
 	. "github.com/koofr/go-httputils"
 	"github.com/koofr/go-ioutils"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"io"
-	"io/ioutil"
-	"net/http"
 )
 
 var _ = Describe("RequestReader", func() {
@@ -85,7 +86,7 @@ bar
 			req.Header.Set("Content-Type", "multipart/form-data; boundary=------------------------c8898eaa2e25254d")
 
 			_, _, err = MultipartRequestReader(req)
-			Expect(err.Error()).To(Equal("MultipartRequestReader missing field name"))
+			Expect(err.Error()).To(Equal("MultipartRequestReader part is not a file"))
 		})
 
 		It("should not read multipart file if file is not the first field", func() {
