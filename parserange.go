@@ -2,21 +2,26 @@ package httputils
 
 import (
 	"errors"
-	"github.com/koofr/go-ioutils"
 	"strconv"
 	"strings"
+
+	"github.com/koofr/go-ioutils"
 )
 
-func ParseRange(s string, size int64) ([]ioutils.FileSpan, error) {
+var ErrInvalidRange = errors.New("invalid range")
+
+func ParseRange(s string, size int64) (spans []ioutils.FileSpan, hasEnd bool, err error) {
 	if s == "" {
-		return nil, nil // header not present
+		return nil, false, nil // header not present
 	}
 
 	const b = "bytes="
 	if !strings.HasPrefix(s, b) {
-		return nil, errors.New("invalid range")
+		return nil, false, ErrInvalidRange
 	}
-	var spans []ioutils.FileSpan
+
+	hasEnd = true
+
 	for _, ra := range strings.Split(s[len(b):], ",") {
 		ra = strings.TrimSpace(ra)
 		if ra == "" {
@@ -24,7 +29,7 @@ func ParseRange(s string, size int64) ([]ioutils.FileSpan, error) {
 		}
 		i := strings.Index(ra, "-")
 		if i < 0 {
-			return nil, errors.New("invalid range")
+			return nil, false, ErrInvalidRange
 		}
 		start, end := strings.TrimSpace(ra[:i]), strings.TrimSpace(ra[i+1:])
 		var s ioutils.FileSpan
@@ -33,7 +38,7 @@ func ParseRange(s string, size int64) ([]ioutils.FileSpan, error) {
 			// range start relative to the end of the file.
 			i, err := strconv.ParseInt(end, 10, 64)
 			if err != nil {
-				return nil, errors.New("invalid range")
+				return nil, false, ErrInvalidRange
 			}
 			if i > size {
 				i = size
@@ -43,16 +48,17 @@ func ParseRange(s string, size int64) ([]ioutils.FileSpan, error) {
 		} else {
 			i, err := strconv.ParseInt(start, 10, 64)
 			if err != nil || i > size || i < 0 {
-				return nil, errors.New("invalid range")
+				return nil, false, ErrInvalidRange
 			}
 			s.Start = i
 			if end == "" {
 				// If no end is specified, range extends to end of the file.
 				s.End = size - 1
+				hasEnd = false
 			} else {
 				i, err := strconv.ParseInt(end, 10, 64)
 				if err != nil || s.Start > i {
-					return nil, errors.New("invalid range")
+					return nil, false, ErrInvalidRange
 				}
 				if i >= size {
 					i = size - 1
@@ -62,5 +68,6 @@ func ParseRange(s string, size int64) ([]ioutils.FileSpan, error) {
 		}
 		spans = append(spans, s)
 	}
-	return spans, nil
+
+	return spans, hasEnd, nil
 }
