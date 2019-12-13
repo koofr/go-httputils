@@ -47,7 +47,7 @@ func ParseRange(s string, size int64) (spans []ioutils.FileSpan, hasEnd bool, er
 			s.End = size - 1
 		} else {
 			i, err := strconv.ParseInt(start, 10, 64)
-			if err != nil || i > size || i < 0 {
+			if err != nil || i >= size || i < 0 {
 				return nil, false, ErrInvalidRange
 			}
 			s.Start = i

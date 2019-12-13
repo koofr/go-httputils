@@ -21,6 +21,11 @@ var _ = Describe("ParseRange", func() {
 	It("should not parse range if start is greater than end", func() {
 		_, _, err := ParseRange("bytes=500-20", 200)
 		Expect(err).To(HaveOccurred())
+
+		_, _, err = ParseRange("bytes=199-", 200)
+		Expect(err).NotTo(HaveOccurred())
+		_, _, err = ParseRange("bytes=200-", 200)
+		Expect(err).To(HaveOccurred())
 	})
 
 	It("should parse range if start and end exist", func() {
