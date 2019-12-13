@@ -149,7 +149,7 @@ ba`
 
 			_, err = ioutil.ReadAll(r)
 			Expect(err).To(HaveOccurred())
-			Expect(err.Error()).To(Equal("multipart: Part Read: myerr"))
+			Expect(err.Error()).To(ContainSubstring("myerr"))
 		})
 
 		It("should get an error if body ends with EOF", func() {
