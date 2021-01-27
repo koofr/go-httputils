@@ -1,10 +1,11 @@
 package httputils_test
 
 import (
-	. "github.com/koofr/go-httputils"
 	"github.com/koofr/go-ioutils"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+
+	. "github.com/koofr/go-httputils"
 )
 
 var _ = Describe("ParseRange", func() {
