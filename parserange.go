@@ -2,6 +2,7 @@ package httputils
 
 import (
 	"errors"
+	"net/textproto"
 	"strconv"
 	"strings"
 
@@ -23,7 +24,7 @@ func ParseRange(s string, size int64) (spans []ioutils.FileSpan, hasEnd bool, er
 	hasEnd = true
 
 	for _, ra := range strings.Split(s[len(b):], ",") {
-		ra = strings.TrimSpace(ra)
+		ra = textproto.TrimString(ra)
 		if ra == "" {
 			continue
 		}
@@ -31,7 +32,7 @@ func ParseRange(s string, size int64) (spans []ioutils.FileSpan, hasEnd bool, er
 		if i < 0 {
 			return nil, false, ErrInvalidRange
 		}
-		start, end := strings.TrimSpace(ra[:i]), strings.TrimSpace(ra[i+1:])
+		start, end := textproto.TrimString(ra[:i]), textproto.TrimString(ra[i+1:])
 		var s ioutils.FileSpan
 		if start == "" {
 			// If no start is specified, end specifies the
