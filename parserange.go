@@ -36,9 +36,15 @@ func ParseRange(s string, size int64) (spans []ioutils.FileSpan, hasEnd bool, er
 		var s ioutils.FileSpan
 		if start == "" {
 			// If no start is specified, end specifies the
-			// range start relative to the end of the file.
+			// range start relative to the end of the file,
+			// and we are dealing with <suffix-length>
+			// which has to be a non-negative integer as per
+			// RFC 7233 Section 2.1 "Byte-Ranges".
+			if end == "" || end[0] == '-' {
+				return nil, false, ErrInvalidRange
+			}
 			i, err := strconv.ParseInt(end, 10, 64)
-			if err != nil {
+			if i < 0 || err != nil {
 				return nil, false, ErrInvalidRange
 			}
 			if i > size {
