@@ -13,11 +13,15 @@ func ResponseJSON(w http.ResponseWriter, r *http.Request, code int, v interface{
 		return fmt.Errorf("response json marshal error: %w", err)
 	}
 
+	return ResponseJSONBytes(w, r, code, jsonBytes)
+}
+
+func ResponseJSONBytes(w http.ResponseWriter, r *http.Request, code int, jsonBytes []byte) error {
 	w.Header().Set("Content-Length", strconv.Itoa(len(jsonBytes)))
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
 	w.WriteHeader(code)
 
-	_, err = w.Write(jsonBytes)
+	_, err := w.Write(jsonBytes)
 	return err
 }
