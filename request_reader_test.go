@@ -38,6 +38,29 @@ bar
 			Expect(data).To(Equal([]byte("bar")))
 		})
 
+		It("should read multipart file with a full path", func() {
+			body := `--------------------------c8898eaa2e25254d
+Content-Disposition: form-data; name="file"; filename="path/to/foo"
+Content-Type: application/octet-stream
+
+bar
+--------------------------c8898eaa2e25254d--`
+
+			req, err := http.NewRequest("POST", "/", bytes.NewReader([]byte(body)))
+			Expect(err).NotTo(HaveOccurred())
+
+			req.Header.Set("Content-Type", "multipart/form-data; boundary=------------------------c8898eaa2e25254d")
+
+			r, name, err := MultipartRequestReader(req)
+			Expect(err).NotTo(HaveOccurred())
+			Expect(name).To(Equal("path/to/foo"))
+
+			data, err := ioutil.ReadAll(r)
+			Expect(err).NotTo(HaveOccurred())
+
+			Expect(data).To(Equal([]byte("bar")))
+		})
+
 		It("should not read multipart file if content-type is invalid", func() {
 			body := `--------------------------c8898eaa2e25254d
 Content-Disposition: form-data; name="file"; filename=""
