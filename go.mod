@@ -1,24 +1,23 @@
 module github.com/koofr/go-httputils
 
-go 1.18
+go 1.21
 
 require (
-	github.com/koofr/go-httpclient v0.0.0-20200420163713-93aa7c75b348
-	github.com/koofr/go-ioutils v0.0.0-20210127134509-84ce9aad0a51
-	github.com/onsi/ginkgo v1.16.4
-	github.com/onsi/gomega v1.27.1
+	github.com/koofr/go-httpclient v0.0.0-20230225102643-5d51a2e9dea6
+	github.com/koofr/go-ioutils v0.0.0-20240520105419-00cafc007e76
+	github.com/onsi/ginkgo/v2 v2.17.3
+	github.com/onsi/gomega v1.33.1
 )
 
 require (
-	github.com/fsnotify/fsnotify v1.4.9 // indirect
-	github.com/google/go-cmp v0.5.9 // indirect
-	github.com/koofr/go-cryptoutils v0.0.0-20151104083704-fe224388747f // indirect
-	github.com/koofr/pb v0.0.0-20200512084736-1389bea13f8d // indirect
-	github.com/nxadm/tail v1.4.8 // indirect
-	golang.org/x/net v0.17.0 // indirect
-	golang.org/x/sys v0.13.0 // indirect
-	golang.org/x/text v0.13.0 // indirect
-	golang.org/x/time v0.0.0-20201208040808-7e3f01d25324 // indirect
-	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
+	github.com/go-logr/logr v1.4.1 // indirect
+	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
+	github.com/google/go-cmp v0.6.0 // indirect
+	github.com/google/pprof v0.0.0-20240509144519-723abb6459b7 // indirect
+	golang.org/x/net v0.25.0 // indirect
+	golang.org/x/sys v0.20.0 // indirect
+	golang.org/x/text v0.15.0 // indirect
+	golang.org/x/time v0.5.0 // indirect
+	golang.org/x/tools v0.21.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
